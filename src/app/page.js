@@ -13,7 +13,7 @@ export default async function Home() {
             Welcome to NextAuth App
           </h1>
           <p className="mt-2 text-sm text-gray-600">
-            With Remember Me & Forgot Password Features
+            With Email-based Password Reset
           </p>
         </div>
         

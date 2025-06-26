@@ -14,7 +14,6 @@ export default function SignIn() {
   const [loading, setLoading] = useState(false)
   const router = useRouter()
 
-  // Load saved credentials from cookies on component mount
   useEffect(() => {
     const savedUsername = Cookies.get('remembered_username')
     const savedPassword = Cookies.get('remembered_password')
@@ -41,13 +40,10 @@ export default function SignIn() {
       if (result?.error) {
         setError('Invalid username or password')
       } else {
-        // Handle Remember Me functionality
         if (rememberMe) {
-          // Save credentials to cookies (expires in 30 days)
           Cookies.set('remembered_username', username, { expires: 30 })
           Cookies.set('remembered_password', password, { expires: 30 })
         } else {
-          // Clear saved credentials if Remember Me is unchecked
           Cookies.remove('remembered_username')
           Cookies.remove('remembered_password')
         }

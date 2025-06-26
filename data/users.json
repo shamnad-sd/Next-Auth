@@ -17,9 +17,17 @@
     {
       "id": "3",
       "username": "shamnad",
-      "password": "123456",
+      "password": "5678910",
       "name": "Shamnad SD",
       "email": "shamnadsdofficial@gmail.com"
+    }
+  ],
+  "passwordResets": [
+    {
+      "userId": "3",
+      "token": "0b3beb19b00689282ccfa64dd280c007ef72ebc9ce8abc30af4472916fe82fae",
+      "expiry": "2025-06-26T06:22:13.809Z",
+      "used": true
     }
   ]
 }

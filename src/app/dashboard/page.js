@@ -15,7 +15,6 @@ export default function Dashboard() {
   }, [session, status, router])
 
   const handleSignOut = () => {
-    // Clear remembered credentials on sign out
     Cookies.remove('remembered_username')
     Cookies.remove('remembered_password')
     signOut({ callbackUrl: '/' })

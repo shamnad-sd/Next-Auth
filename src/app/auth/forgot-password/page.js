@@ -1,17 +1,13 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
 export default function ForgotPassword() {
-  const [username, setUsername] = useState('')
-  const [newPassword, setNewPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
+  const [email, setEmail] = useState('')
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
   const [loading, setLoading] = useState(false)
-  const router = useRouter()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -19,44 +15,33 @@ export default function ForgotPassword() {
     setError('')
     setSuccess('')
 
-    // Validate passwords match
-    if (newPassword !== confirmPassword) {
-      setError('Passwords do not match')
-      setLoading(false)
-      return
-    }
-
-    // Validate password length
-    if (newPassword.length < 6) {
-      setError('Password must be at least 6 characters long')
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(email)) {
+      setError('Please enter a valid email address')
       setLoading(false)
       return
     }
 
     try {
-      const response = await fetch('/api/auth/reset-password', {
+      const response = await fetch('/api/auth/forgot-password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          username,
-          newPassword
-        }),
+        body: JSON.stringify({ email }),
       })
 
       const data = await response.json()
 
       if (response.ok) {
-        setSuccess('Password updated successfully! Redirecting to login...')
-        setTimeout(() => {
-          router.push('/auth/signin')
-        }, 2000)
+        setSuccess(data.message)
+        setEmail('')
       } else {
-        setError(data.error || 'Failed to update password')
+        setError(data.error || 'Failed to send reset email')
       }
     } catch (error) {
-      setError('Something went wrong')
+      setError('Something went wrong. Please try again.')
     } finally {
       setLoading(false)
     }
@@ -67,54 +52,32 @@ export default function ForgotPassword() {
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Reset Your Password
+            Forgot Password
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
-            Enter your username and new password
+            Enter your email address and we'll send you a link to reset your password
           </p>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <div className="space-y-4">
-            <div>
-              <input
-                type="text"
-                required
-                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </div>
-            <div>
-              <input
-                type="password"
-                required
-                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="New Password"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-              />
-            </div>
-            <div>
-              <input
-                type="password"
-                required
-                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Confirm New Password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-            </div>
+          <div>
+            <input
+              type="email"
+              required
+              className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              placeholder="Email address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </div>
 
           {error && (
-            <div className="text-red-600 text-sm text-center bg-red-50 p-2 rounded">
+            <div className="text-red-600 text-sm text-center bg-red-50 p-3 rounded">
               {error}
             </div>
           )}
 
           {success && (
-            <div className="text-green-600 text-sm text-center bg-green-50 p-2 rounded">
+            <div className="text-green-600 text-sm text-center bg-green-50 p-3 rounded">
               {success}
             </div>
           )}
@@ -125,7 +88,7 @@ export default function ForgotPassword() {
               disabled={loading}
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
             >
-              {loading ? 'Updating Password...' : 'Update Password'}
+              {loading ? 'Sending...' : 'Send Reset Link'}
             </button>
           </div>
 
