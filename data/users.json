@@ -3,31 +3,36 @@
     {
       "id": "1",
       "username": "admin",
-      "password": "admin123",
+      "password": "sd@123",
       "name": "Admin User",
-      "email": "admin@example.com"
+      "role": "admin",  
+      "email": "shamnad2nk@gmail.com",
+      "last_login": "7/2/2025, 11:10:36",
+      "last_password_reset": "7/2/2025, 11:10:06",
+      "last_ip_address": "::1"
     },
     {
       "id": "2",
       "username": "user1",
       "password": "password123",
       "name": "John Doe",
-      "email": "john@example.com"
-    },
-    {
-      "id": "3",
-      "username": "shamnad",
-      "password": "5678910",
-      "name": "Shamnad SD",
-      "email": "shamnadsdofficial@gmail.com"
+      "role": "user",
+      "email": "john@example.com",
+      "last_login": null,
+      "last_password_reset": null,
+      "last_ip_address": null
     }
   ],
   "passwordResets": [
     {
-      "userId": "3",
-      "token": "0b3beb19b00689282ccfa64dd280c007ef72ebc9ce8abc30af4472916fe82fae",
-      "expiry": "2025-06-26T06:22:13.809Z",
-      "used": true
+      "userId": "1",
+      "token": "17531e13bd5852ffc44718f868a7dac7984035f443f633c41ea4b084cb98d1c1",
+      "expiry": "2025-07-02T06:39:30.305Z",
+      "used": true,
+      "requested_ip": "::1",
+      "requested_at": "2025-07-02T05:39:30.305Z",
+      "used_at": "7/2/2025, 11:10:06",
+      "used_ip": "::1"
     }
   ]
 }

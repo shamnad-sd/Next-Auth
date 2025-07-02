@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
+import { getClientIP } from '@/lib/utils'
 
 export async function POST(request) {
   try {
@@ -59,14 +60,21 @@ export async function POST(request) {
       )
     }
     
-    // Update password
+    // Update password and last_password_reset
+    const resetTime = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata', hour12: false })
+    const clientIP = getClientIP(request)
+    
     userData.users[userIndex].password = newPassword
+    userData.users[userIndex].last_password_reset = resetTime
+    userData.users[userIndex].last_ip_address = clientIP
     
     // Mark token as used
     const resetIndex = userData.passwordResets.findIndex(
       reset => reset.token === token
     )
     userData.passwordResets[resetIndex].used = true
+    userData.passwordResets[resetIndex].used_at = resetTime
+    userData.passwordResets[resetIndex].used_ip = clientIP
     
     // Write back to file
     fs.writeFileSync(filePath, JSON.stringify(userData, null, 2))

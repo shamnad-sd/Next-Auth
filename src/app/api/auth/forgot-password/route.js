@@ -3,6 +3,7 @@ import fs from 'fs'
 import path from 'path'
 import crypto from 'crypto'
 import { sendPasswordResetEmail } from '@/lib/email'
+import { getClientIP } from '@/lib/utils'
 
 export async function POST(request) {
   try {
@@ -50,7 +51,9 @@ export async function POST(request) {
       userId: user.id,
       token: resetToken,
       expiry: tokenExpiry.toISOString(),
-      used: false
+      used: false,
+      requested_ip: getClientIP(request),
+      requested_at: new Date().toISOString()
     })
     
     // Write back to file
