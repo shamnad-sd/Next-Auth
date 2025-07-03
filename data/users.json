@@ -5,11 +5,13 @@
       "username": "admin",
       "password": "sd@123",
       "name": "Admin User",
-      "role": "admin",  
+      "role": "admin",
       "email": "shamnad2nk@gmail.com",
-      "last_login": "7/2/2025, 11:10:36",
+      "last_login": "7/3/2025, 12:15:37",
       "last_password_reset": "7/2/2025, 11:10:06",
-      "last_ip_address": "::1"
+      "last_ip_address": "::1",
+      "created_at": null,
+      "updated_at": null
     },
     {
       "id": "2",
@@ -20,7 +22,9 @@
       "email": "john@example.com",
       "last_login": null,
       "last_password_reset": null,
-      "last_ip_address": null
+      "last_ip_address": null,
+      "created_at": null,
+      "updated_at": null
     }
   ],
   "passwordResets": [
