@@ -150,3 +150,5 @@ export default function ResetPassword() {
     </div>
   )
 }
+
+export const dynamic = "force-dynamic"
