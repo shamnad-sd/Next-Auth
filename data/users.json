@@ -3,12 +3,12 @@
     {
       "id": "1",
       "username": "admin",
-      "password": "sd@123",
+      "password": "sd@1234",
       "name": "Admin User",
       "role": "admin",
       "email": "shamnad2nk@gmail.com",
-      "last_login": "7/3/2025, 12:15:37",
-      "last_password_reset": "7/2/2025, 11:10:06",
+      "last_login": "7/3/2025, 12:37:02",
+      "last_password_reset": "7/3/2025, 12:36:46",
       "last_ip_address": "::1",
       "created_at": null,
       "updated_at": null
@@ -30,12 +30,12 @@
   "passwordResets": [
     {
       "userId": "1",
-      "token": "17531e13bd5852ffc44718f868a7dac7984035f443f633c41ea4b084cb98d1c1",
-      "expiry": "2025-07-02T06:39:30.305Z",
+      "token": "a876aa923fd067ed5edb065dfe3eb9503c67507701d9d08edd386d0980b29c6e",
+      "expiry": "2025-07-03T08:06:04.187Z",
       "used": true,
       "requested_ip": "::1",
-      "requested_at": "2025-07-02T05:39:30.305Z",
-      "used_at": "7/2/2025, 11:10:06",
+      "requested_at": "2025-07-03T07:06:04.187Z",
+      "used_at": "7/3/2025, 12:36:46",
       "used_ip": "::1"
     }
   ]
