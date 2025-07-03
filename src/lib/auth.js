@@ -3,6 +3,7 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 import fs from 'fs'
 import path from 'path'
 
+
 export const authOptions = {
   providers: [
     CredentialsProvider({
@@ -92,7 +93,7 @@ export const authOptions = {
       return session
     }
   },
-  secret: process.env.NEXTAUTH_SECRET
+  secret: process.env.NEXTAUTH_SECRET || nextKey
 }
 
 export const handler = NextAuth(authOptions)

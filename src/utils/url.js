@@ -1,0 +1,1 @@
+export const frontendUrl = process.env.NEXTAUTH_URL;

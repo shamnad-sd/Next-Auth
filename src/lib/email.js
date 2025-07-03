@@ -1,3 +1,5 @@
+import { frontendUrl } from '@/utils/url'
+import { emailPassword, emailUsername, hostName, portNumber, siteEmail, siteFromEmail } from '@/utils/variable'
 import nodemailer from 'nodemailer'
 
 // Create transporter with your email service configuration
@@ -11,20 +13,20 @@ import nodemailer from 'nodemailer'
 
 // Alternative configuration for custom SMTP
 const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: process.env.SMTP_PORT,
+  host: hostName,
+  port: portNumber,
   secure: false, // true for 465, false for other ports
   auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS
+    user: emailUsername,
+    pass: emailPassword
   }
 })
 
 export async function sendPasswordResetEmail(email, resetToken, userName) {
-  const resetUrl = `${process.env.NEXTAUTH_URL}/auth/reset-password?token=${resetToken}`
+  const resetUrl = `${frontendUrl}/auth/reset-password?token=${resetToken}`
   
   const mailOptions = {
-    from: process.env.EMAIL_FROM || process.env.EMAIL_USER,
+    from: siteFromEmail || siteEmail,
     to: email,
     subject: 'Password Reset Request',
     html: `
