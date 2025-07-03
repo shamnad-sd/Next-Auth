@@ -1,1 +1,1 @@
-export const frontendUrl = process.env.NEXTAUTH_URL;
+export const frontendUrl = process.env.NEXT_PUBLIC_URL;
