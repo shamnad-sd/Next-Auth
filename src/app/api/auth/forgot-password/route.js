@@ -1,9 +1,7 @@
 import { NextResponse } from 'next/server'
-import fs from 'fs'
-import path from 'path'
 import crypto from 'crypto'
 import { sendPasswordResetEmail } from '@/lib/email'
-import { getClientIP } from '@/lib/utils'
+import { getUserByEmail, createPasswordResetToken } from '@/lib/userService'
 
 export async function POST(request) {
   try {
@@ -16,13 +14,8 @@ export async function POST(request) {
       )
     }
 
-    // Read the JSON file
-    const filePath = path.join(process.cwd(), 'data', 'users.json')
-    const fileData = fs.readFileSync(filePath, 'utf8')
-    const userData = JSON.parse(fileData)
-    
     // Find user by email
-    const user = userData.users.find(u => u.email === email)
+    const user = await getUserByEmail(email)
     
     if (!user) {
       // Don't reveal if email exists or not for security
@@ -34,30 +27,10 @@ export async function POST(request) {
     
     // Generate reset token
     const resetToken = crypto.randomBytes(32).toString('hex')
-    const tokenExpiry = new Date(Date.now() + 3600000) // 1 hour from now
+    const expiresAt = new Date(Date.now() + 3600000) // 1 hour from now
     
-    // Store reset token
-    if (!userData.passwordResets) {
-      userData.passwordResets = []
-    }
-    
-    // Remove any existing tokens for this user
-    userData.passwordResets = userData.passwordResets.filter(
-      reset => reset.userId !== user.id
-    )
-    
-    // Add new reset token
-    userData.passwordResets.push({
-      userId: user.id,
-      token: resetToken,
-      expiry: tokenExpiry.toISOString(),
-      used: false,
-      requested_ip: getClientIP(request),
-      requested_at: new Date().toISOString()
-    })
-    
-    // Write back to file
-    fs.writeFileSync(filePath, JSON.stringify(userData, null, 2))
+    // Store reset token in database
+    await createPasswordResetToken(user.id, resetToken, expiresAt)
     
     // Send email
     const emailResult = await sendPasswordResetEmail(email, resetToken, user.name)
