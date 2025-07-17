@@ -21,6 +21,6 @@ export async function executeQuery(query, params = []) {
     console.error('Database query error:', error)
     throw error
   } finally {
-    await conn.end() // close the connection after query execution
+    await conn.end() // close the connection afer query execution
   }
 }
